@@ -140,10 +140,10 @@ The Cab System web application is built using the following technologies:
 
 ## 8. Screenshots
 
-![Portal Image](./screenshots/Screenshot (163).png)
-![Portal Image](./screenshots/Screenshot (162).png)
-![Portal Image](./screenshots/Screenshot (164).png)
-![Portal Image](./screenshots/Screenshot (165).png)
+![Portal Image](./screenshots/Screenshot%20(162).png)
+![Portal Image](./screenshots/Screenshot%20(163).png)
+![Portal Image](./screenshots/Screenshot%20(164).png)
+![Portal Image](./screenshots/Screenshot%20(165).png)
 
 ## 9. Author
 
