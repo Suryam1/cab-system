@@ -67,14 +67,16 @@ const AllCabs = () => {
       </div>
       {cabs.length > 0 ? (
         <div className="mt-8">
-          {cabs.map((cab) => (
-            <CabsCard
-              key={cab._id}
-              cab={cab}
-              handleEditBooking={handleEditBooking}
-              handleDeleteBooking={handleDeleteBooking}
-            />
-          ))}
+          {cabs
+            .sort((a, b) => a.price - b.price)
+            .map((cab) => (
+              <CabsCard
+                key={cab._id}
+                cab={cab}
+                handleEditBooking={handleEditBooking}
+                handleDeleteBooking={handleDeleteBooking}
+              />
+            ))}
         </div>
       ) : (
         <p className="text-gray-600 text-center mt-4">No cabs available.</p>

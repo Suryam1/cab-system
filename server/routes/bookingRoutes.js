@@ -91,7 +91,11 @@ router.delete("/:id", async (req, res) => {
     if (!updatedBooking) {
       return res.status(404).json({ error: "Booking not found." });
     }
-
+    await Cab.findByIdAndUpdate(updatedBooking.cab._id, {
+      $set: {
+        busyDuration: new Date(),
+      },
+    });
     res.status(200).end();
   } catch (error) {
     res.status(500).json({ error: "Could not delete the booking." });
