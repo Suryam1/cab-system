@@ -8,28 +8,29 @@ const AllCabs = () => {
   const navigate = useNavigate();
   const [cabs, setCabs] = useState([]);
 
-  useEffect(() => {
-    async function fetchBookings() {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/cabs/allCabs`
-        );
+  const fetchBookings = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/cabs/allCabs`
+      );
 
-        if (response.statusText.length > 0) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.data;
-        setCabs(data);
-      } catch (error) {
-        console.log("Error fetching data:", { error: error.message });
+      if (response.statusText.length > 0) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    }
 
+      const data = await response.data;
+      setCabs(data);
+    } catch (error) {
+      console.log("Error fetching data:", { error: error.message });
+    }
+  };
+
+  useEffect(() => {
     fetchBookings();
   }, []);
 
   const handleEditBooking = (cabId) => {
+    fetchBookings();
     navigate(`/edit-cab/${cabId}`);
   };
 
@@ -45,6 +46,7 @@ const AllCabs = () => {
       .catch((error) => {
         console.log("Error deleting booking", error);
       });
+    fetchBookings();
   };
 
   return (

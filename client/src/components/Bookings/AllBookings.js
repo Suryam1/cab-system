@@ -8,28 +8,29 @@ function BookingList() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    async function fetchBookings() {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/bookings`
-        );
-          
-        if (response.statusText.length > 0) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+  const fetchBookings = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/bookings`
+      );
 
-        const data = await response.data;
-        setBookings(data);
-      } catch (error) {
-        console.log("Error fetching data:", { error: error.message });
+      if (response.statusText.length > 0) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    }
 
+      const data = await response.data;
+      setBookings(data);
+    } catch (error) {
+      console.log("Error fetching data:", { error: error.message });
+    }
+  };
+
+  useEffect(() => {
     fetchBookings();
   }, []);
 
   const handleEditBooking = (bookingId) => {
+    fetchBookings();
     navigate(`/edit-booking/${bookingId}`);
   };
 
@@ -45,6 +46,7 @@ function BookingList() {
       .catch((error) => {
         console.log("Error deleting booking", error);
       });
+    fetchBookings();
   };
 
   return (
