@@ -67,14 +67,17 @@ function BookingList() {
       </div>
       {bookings.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {bookings.map((booking) => (
-            <Booking
-              key={booking._id}
-              booking={booking}
-              onEdit={handleEditBooking}
-              onDelete={handleDeleteBooking}
-            />
-          ))}
+          {bookings.map(
+            (booking) =>
+              booking.status !== "archived" && (
+                <Booking
+                  key={booking._id}
+                  booking={booking}
+                  handleEditBooking={handleEditBooking}
+                  handleDeleteBooking={handleDeleteBooking}
+                />
+              )
+          )}
         </div>
       ) : (
         <div>
