@@ -17,6 +17,7 @@ function BookingForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState("");
   const [startTime, setStartTime] = useState(new Date().getTime());
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const isFirstFormValid = () => {
@@ -43,6 +44,7 @@ function BookingForm() {
         .then((response) => {
           const filteredCabs = response.data;
           setAvailableCabs(filteredCabs);
+          setLoading(false);
         });
     } catch (error) {
       console.log("Error fetching cabs:", error);
@@ -51,6 +53,7 @@ function BookingForm() {
 
   const showAvailableCabsFunc = (event) => {
     event.preventDefault();
+    setLoading(true);
     // Check if the form is valid before fetching cabs
     if (isFirstFormValid()) {
       calculateShortestTimeEndPoint(source, destination);
@@ -261,7 +264,12 @@ function BookingForm() {
           </p>
         )}
 
-        {showAvailableCabs &&
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          showAvailableCabs &&
           source !== "" &&
           destination !== "" &&
           source !== destination &&
@@ -311,7 +319,8 @@ function BookingForm() {
                 Create Booking
               </button>
             </div>
-          )}
+          )
+        )}
         {confirmationMessage && (
           <div className=" text-xl text-green-500 font-semibold mt-3">
             {confirmationMessage}

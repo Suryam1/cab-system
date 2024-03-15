@@ -18,12 +18,12 @@ const CabsCard = ({ cab, handleEditBooking, handleDeleteBooking }) => {
           >
             Edit
           </button>
-          <button
+          {/* <button
             onClick={() => handleDeleteBooking(cab._id)}
             className="bg-red-500 hover:bg-red-600 text-white rounded-md p-2 ml-2"
           >
             Delete
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

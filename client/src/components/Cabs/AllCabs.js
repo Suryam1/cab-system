@@ -7,6 +7,7 @@ import axios from "axios";
 const AllCabs = () => {
   const navigate = useNavigate();
   const [cabs, setCabs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchBookings = async () => {
     try {
@@ -20,6 +21,7 @@ const AllCabs = () => {
 
       const data = await response.data;
       setCabs(data);
+      setLoading(false);
     } catch (error) {
       console.log("Error fetching data:", { error: error.message });
     }
@@ -59,13 +61,17 @@ const AllCabs = () => {
             Home
           </button>
         </Link>
-        <Link to="/addCabs">
+        {/* <Link to="/addCabs">
           <button className="bg-blue-500 text-white rounded p-3 my-3">
             Add Cabs
           </button>
-        </Link>
+        </Link> */}
       </div>
-      {cabs.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      ) : cabs.length > 0 ? (
         <div className="mt-8">
           {cabs
             .sort((a, b) => a.price - b.price)
