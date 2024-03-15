@@ -117,7 +117,7 @@ function EditBookingPage() {
         setErrorMessage("Error updating booking");
         console.error("Error updating booking", error);
       });
-
+    fetchCabs();
     navigate("/allBookings");
   };
 

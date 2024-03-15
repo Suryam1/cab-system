@@ -68,17 +68,60 @@ router.get("/:id", async (req, res) => {
 });
 
 // PUT /bookings/:id
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const updatedBooking = await Booking.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+//     if (!updatedBooking) {
+//       return res.status(404).json({ error: "Booking not found." });
+//     }
+//     res.status(200).json(updatedBooking);
+//   } catch (error) {
+//     res.status(500).json({ error: "Could not update the booking." });
+//   }
+// });
+
 router.put("/:id", async (req, res) => {
   try {
-    const updatedBooking = await Booking.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedBooking) {
-      return res.status(404).json({ error: "Booking not found." });
+    // Check if carType is being updated
+    if (updatedFields.carType) {
+      // Find the booking
+      const booking = await Booking.findById(bookingId);
+      if (!booking) {
+        return res.status(404).json({ error: "Booking not found." });
+      }
+
+      // Update the car status with the current date
+      const carIdToUpdate = booking.car._id;
+      const car = await Car.findByIdAndUpdate(
+        carIdToUpdate,
+        { status: new Date() },
+        { new: true }
+      );
+      if (!car) {
+        return res.status(404).json({ error: "Car not found." });
+      }
+
+      // Update the status of the new carType
+      const newCarType = updatedFields.carType;
+      const estimatedTime = await calculateShortestTime(
+        booking.source,
+        booking.destination
+      );
+      const newStatusTime = new Date().getTime() + estimatedTime.time * 60000;
+
+      const newCar = await Car.findByIdAndUpdate(
+        newCarType._id,
+        { status: new Date(newStatusTime) },
+        { new: true }
+      );
+      if (!newCar) {
+        return res.status(404).json({ error: "New car not found." });
+      }
     }
-    res.status(200).json(updatedBooking);
   } catch (error) {
     res.status(500).json({ error: "Could not update the booking." });
   }
