@@ -14,8 +14,8 @@ function BookingList() {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/bookings`
         );
-
-        if (!response.statusText) {
+          
+        if (response.statusText.length > 0) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 

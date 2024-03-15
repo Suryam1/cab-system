@@ -4,10 +4,8 @@ import CabsCard from "./CabsCard";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-
 const AllCabs = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [cabs, setCabs] = useState([]);
 
   useEffect(() => {
@@ -17,7 +15,7 @@ const AllCabs = () => {
           `${process.env.REACT_APP_API_URL}/cabs/allCabs`
         );
 
-        if (!response.statusText) {
+        if (response.statusText.length > 0) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
@@ -49,7 +47,6 @@ const AllCabs = () => {
       });
   };
 
-
   return (
     <div className="max-w-5xl flex flex-col mt-16 mb-16 mx-auto p-6 bg-white rounded shadow-md">
       <h1 className="text-3xl font-semibold mb-4">All Cabs</h1>
@@ -66,22 +63,20 @@ const AllCabs = () => {
           </button>
         </Link>
       </div>
-      {
-        cabs.length > 0 ? (
-          <div className="mt-8">
-            {cabs.map((cab) => (
-              <CabsCard
-                key={cab._id}
-                cab={cab}
-                handleEditBooking={handleEditBooking}
-                handleDeleteBooking={handleDeleteBooking}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600 text-center mt-4">No cabs available.</p>
-        )
-      }
+      {cabs.length > 0 ? (
+        <div className="mt-8">
+          {cabs.map((cab) => (
+            <CabsCard
+              key={cab._id}
+              cab={cab}
+              handleEditBooking={handleEditBooking}
+              handleDeleteBooking={handleDeleteBooking}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-600 text-center mt-4">No cabs available.</p>
+      )}
     </div>
   );
 };
