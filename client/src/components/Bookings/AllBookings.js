@@ -73,8 +73,8 @@ function BookingList() {
                 <Booking
                   key={booking._id}
                   booking={booking}
-                  handleEditBooking={handleEditBooking}
-                  handleDeleteBooking={handleDeleteBooking}
+                  onEdit={handleEditBooking}
+                  onDelete={handleDeleteBooking}
                 />
               )
           )}
