@@ -6,6 +6,7 @@ const bookingSchema = new mongoose.Schema({
   email: String,
   cab: { type: Object },
   startTime: Date,
+  endTime:Date,
   bookingPrice: Number,
   estimatedTime: Number,
   status: {

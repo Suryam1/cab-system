@@ -21,9 +21,6 @@ function BookingForm() {
   const navigate = useNavigate();
 
   const isFirstFormValid = () => {
-    console.log("userEmail", userEmail);
-    console.log("source", source);
-    console.log("destination", destination);
     return (
       userEmail.trim() !== "" &&
       source.trim() !== "" &&
@@ -64,6 +61,9 @@ function BookingForm() {
       }
 
       setShowAvailableCabs(true);
+    } else {
+      console.log("Form is not valid");
+      setShowAvailableCabs(false);
     }
   };
 
@@ -263,6 +263,16 @@ function BookingForm() {
             Source and Destination are same!
           </p>
         )}
+
+        {
+          //validate email
+          userEmail.trim() !== "" && !userEmail.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) && (
+            <p className="text-lg font-semibold mb-4">
+              {" "}
+              Please enter a valid email address!
+            </p>
+          )
+        }
 
         {loading ? (
           <div className="flex justify-center items-center">

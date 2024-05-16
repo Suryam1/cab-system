@@ -1,11 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const Cab = require("../models/Cab");
+const Booking = require("../modals/Booking")
 
 // GET /cabs
 router.get("/", async (req, res) => {
+  const source = req.query.source;
+  const destination = req.query.destination;
+  const startTime = new Date(req.query.startTime);
+
+  const estimatedTime = await calculateShortestTime(source,destination);
+
+  const endTime = new Date(startTime.getTime() + estimatedTime.time * 60000);
+
+
   try {
     const cabs = await Cab.find({ busyDuration: { $lt: new Date() } });
+    const allBooking  = Booking.find();
+    const availableCabs = allBooking.filter((booking) => {
+      if(){
+        
+      }
+      else{
+        return booking.cab;
+      }
+        
+    }
+    );
+
+
     res.status(200).json(cabs);
   } catch (error) {
     res.status(500).json({ error: "Could not retrieve cabs." });

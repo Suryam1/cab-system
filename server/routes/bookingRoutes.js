@@ -13,13 +13,18 @@ router.post("/addBooking", async (req, res) => {
     const estimatedTime = await calculateShortestTime(source, destination);
     const bookingPrice = estimatedTime.time * cab?.price;
 
+    const endTime = new Date(startTime.getTime() + estimatedTime.time * 60000);
+
+    
+
     // Create the booking in the database
     const newBooking = new Booking({
       source,
       destination,
       email,
       cab: cab,
-      // startTime,
+      startTime,
+      endTime,
       bookingPrice: bookingPrice,
       estimatedTime: estimatedTime.time,
       status: "scheduled",
